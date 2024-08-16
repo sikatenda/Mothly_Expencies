@@ -98,18 +98,42 @@ class _MyWidgetState extends State<MyWidget> {
 
   Widget getList(int index) {
     return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text(expenses[index].name[0]),
-          backgroundColor: index % 2 == 0 ? Colors.amber : Colors.blue,
-          foregroundColor: Colors.black87,
-        ),
-        title: Column(
-          children: [
-            Text(expenses[index].name),
-            Text(expenses[index].amount.toString()),
-          ],
-        ),
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.blue,
+              foregroundColor: Colors.black87,
+              child: Text(
+                expenses[index].name[0],
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  expenses[index].name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(expenses[index].amount.toString()),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      expenses.removeAt(index);
+                    });
+                  },
+                  icon: const Icon(Icons.delete)),
+            ],
+          ),
+        ],
       ),
     );
   }
