@@ -16,6 +16,8 @@ class _MyWidgetState extends State<MyWidget> {
   TextEditingController amoutController = TextEditingController();
   List<Expenses> expenses = List.empty(growable: true);
 
+  int Index = -1;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -73,7 +75,20 @@ class _MyWidgetState extends State<MyWidget> {
                   width: 12,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String name = nameController.text.trim();
+                    String amount = amoutController.text.trim();
+                    if (name.isNotEmpty && amount.isNotEmpty) {
+                      setState(() {
+                        expenses[Index].name = name;
+                        expenses[Index].amount = int.parse(amount);
+                        Index = -1;
+
+                        nameController.clear();
+                        amoutController.clear();
+                      });
+                    }
+                  },
                   child: const Text('UPDATE'),
                 ),
               ],
@@ -123,7 +138,15 @@ class _MyWidgetState extends State<MyWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+              IconButton(
+                  onPressed: () {
+                    nameController.text = expenses[index].name;
+                    amoutController.text = expenses[index].amount.toString();
+                    setState(() {
+                      Index = index;
+                    });
+                  },
+                  icon: const Icon(Icons.edit)),
               IconButton(
                   onPressed: () {
                     setState(() {
