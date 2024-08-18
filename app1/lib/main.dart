@@ -116,45 +116,58 @@ class _MyWidgetState extends State<MyWidget> {
       child: Column(
         children: [
           ListTile(
-            leading: CircleAvatar(
-              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.blue,
-              foregroundColor: Colors.black87,
-              child: Text(
-                expenses[index].name[0],
-                style: const TextStyle(fontWeight: FontWeight.bold),
+            leading: Container(
+              child: CircleAvatar(
+                backgroundColor: index % 2 == 0 ? Colors.amber : Colors.blue,
+                foregroundColor: Colors.black87,
+                child: Text(
+                  expenses[index].name[0],
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  expenses[index].name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      expenses[index].name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                Text(expenses[index].amount.toString()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(expenses[index].amount.toString()),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          nameController.text = expenses[index].name;
+                          amoutController.text =
+                              expenses[index].amount.toString();
+                          setState(() {
+                            Index = index;
+                          });
+                        },
+                        icon: const Icon(Icons.edit)),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            expenses.removeAt(index);
+                          });
+                        },
+                        icon: const Icon(Icons.delete)),
+                  ],
+                ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    nameController.text = expenses[index].name;
-                    amoutController.text = expenses[index].amount.toString();
-                    setState(() {
-                      Index = index;
-                    });
-                  },
-                  icon: const Icon(Icons.edit)),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      expenses.removeAt(index);
-                    });
-                  },
-                  icon: const Icon(Icons.delete)),
-            ],
           ),
         ],
       ),
